@@ -42,10 +42,10 @@ export default defineComponent({
 
 <template>
   <main>
-    <h1 class="mt-16 sm:mt-15 mb-3 max-w-xl mx-auto text-center">
+    <h1 class="mt-16 sm:mt-15 mb-3 max-w-xl mx-auto text-center px-2">
       Look up any movie, series, or game and see what you find.
     </h1>
-    <form class="flex mx-auto max-w-xl gap-x-2" @submit.prevent="fetchMovies(search)">
+    <form class="flex mx-auto max-w-xl gap-x-2 px-2" @submit.prevent="fetchMovies(search)">
       <input
         v-model="search"
         type="text"
