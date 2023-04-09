@@ -14,7 +14,7 @@ Search &amp; History application for Slingshot evaluation
 
 Project must be submitted as a link to a repository
 
-## Things to pay attention too
+## Things to pay attention to
 
 - Design and styling
 - Code layout and structure
@@ -24,12 +24,6 @@ Project must be submitted as a link to a repository
 
 ```sh
 npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
 ```
 
 ### Compile and Preview
