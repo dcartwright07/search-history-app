@@ -42,7 +42,7 @@ export default defineComponent({
           class="absolute inset-0 bg-grid-slate-100 [mask-image:linear-gradient(0deg,#fff,rgba(255,255,255,0.6))] dark:bg-grid-slate-700/25 dark:[mask-image:linear-gradient(0deg,rgba(255,255,255,0.1),rgba(255,255,255,0.5))]"
         ></div>
         <div class="relative rounded-lg overflow-auto">
-          <div class="border-b overflow-hidden my-8">
+          <div class="border-b overflow-scroll my-8">
             <table class="border-collapse table-auto w-full text-sm">
               <thead>
                 <tr>
