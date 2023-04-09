@@ -69,7 +69,7 @@ export default defineComponent({
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="movie in movies" :key="movie.imdbID" class="group relative">
           <div
-            class="min-h-80 aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80"
+            class="min-h-96 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none md:h-96"
           >
             <img
               :src="hasPoster(movie.Poster) ? movie.Poster : '/src/assets/placeholder.png'"
@@ -84,12 +84,12 @@ export default defineComponent({
                 {{ movie.Title }}
               </h3>
             </div>
-            <p class="text-sm font-medium text-gray-900">
+            <p class="text-sm font-medium text-gray-900 pl-8">
               {{ movie.Year }}
             </p>
           </div>
-          <p class="my-2">
-            <span class="text-sm bg-slate-300 rounded-full px-3 py-1">
+          <p class="my-2 text-xs">
+            <span class="bg-slate-300 rounded-full px-3 py-1">
               {{ movie.Type.toUpperCase() }}
             </span>
           </p>
