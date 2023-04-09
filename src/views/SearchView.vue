@@ -98,7 +98,7 @@ export default defineComponent({
     </div>
 
     <button
-      v-if="movies.length"
+      v-if="movies.length && movies.length < totalMovies && search"
       class="rounded-md bg-red-700 hover:bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm mx-auto max-w-xl flex gap-x-2 mb-10"
       @click="fetchMoreMovies(search)"
     >
