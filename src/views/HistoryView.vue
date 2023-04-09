@@ -56,7 +56,7 @@ export default defineComponent({
                     Total Results
                   </th>
                   <th class="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
-                    Success
+                    Status
                   </th>
                   <th class="border-b font-medium p-4 pr-8 pt-0 pb-3 text-slate-400 text-left">
                     Messages
