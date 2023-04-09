@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import type { Movie, SearchHistory } from '@/types/search'
+import type { Movie, SearchHistory, SearchHistoryOptions } from '@/types/search'
 import axios from 'axios'
 
 const API_URL = 'http://www.omdbapi.com/?apikey=64e13ed5'
@@ -17,9 +17,9 @@ export const useMovieStore = defineStore('movie', () => {
     if (results.Response === 'True') {
       movies.value = results.Search
       totalMovies.value = parseInt(results.totalResults)
-      updateHistory(searchTerm, parseInt(results.totalResults))
+      updateHistory(searchTerm, { totalResults: parseInt(results.totalResults) })
     } else {
-      updateHistory(searchTerm)
+      updateHistory(searchTerm, { errorMessage: results.Error })
     }
   }
 
@@ -29,21 +29,24 @@ export const useMovieStore = defineStore('movie', () => {
 
     if (results.Response === 'True') {
       movies.value.push(...results.Search)
-      updateHistory(searchTerm, parseInt(results.totalResults))
+      updateHistory(searchTerm, { totalResults: parseInt(results.totalResults) })
     } else {
-      updateHistory(searchTerm)
+      updateHistory(searchTerm, { errorMessage: results.Error })
     }
   }
 
-  function updateHistory(searchTerm: string, totalResults?: number) {
+  function updateHistory(searchTerm: string, { totalResults, errorMessage }: SearchHistoryOptions) {
     const historyObj = {
       searchTerm: searchTerm,
-      successful: true,
       dateTime: new Date()
     } as SearchHistory
 
     if (totalResults) {
       historyObj.totalResults = totalResults
+      historyObj.successful = true
+    } else {
+      historyObj.successful = false
+      historyObj.errorMessage = errorMessage
     }
 
     history.value.push(historyObj)

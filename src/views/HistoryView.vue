@@ -42,6 +42,7 @@ export default defineComponent({
               Search Term: <em class="text-slate-500">{{ record.searchTerm }}</em>
             </p>
             <p v-if="record.totalResults" class="pl-5">Total Results: {{ record.totalResults }}</p>
+            <p v-if="record.errorMessage" class="pl-5">Error: {{ record.errorMessage }}</p>
           </div>
           <div
             :class="record.successful ? 'text-green-600' : 'text-red-700'"

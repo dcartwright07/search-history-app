@@ -11,4 +11,10 @@ export interface SearchHistory {
   successful: boolean
   dateTime: Date
   totalResults?: number
+  errorMessage?: string
+}
+
+export interface SearchHistoryOptions {
+  totalResults?: number
+  errorMessage?: string
 }
