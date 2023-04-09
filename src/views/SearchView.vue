@@ -24,7 +24,7 @@ export default defineComponent({
     hasPoster(poster: string) {
       return poster !== this.noValue
     },
-    ...mapActions(useMovieStore, ['fetchMovies'])
+    ...mapActions(useMovieStore, ['fetchMovies', 'fetchMoreMovies'])
   }
 })
 </script>
@@ -76,9 +76,21 @@ export default defineComponent({
               {{ movie.Year }}
             </p>
           </div>
-          <p>type: {{ movie.Type }}</p>
+          <p class="my-2">
+            <span class="text-sm bg-slate-300 rounded-full px-3 py-1">
+              {{ movie.Type.toUpperCase() }}
+            </span>
+          </p>
         </div>
       </div>
     </div>
+
+    <button
+      v-if="movies.length"
+      class="rounded-md bg-red-700 hover:bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm mx-auto max-w-xl flex gap-x-2 mb-10"
+      @click="fetchMoreMovies(search)"
+    >
+      Load More
+    </button>
   </main>
 </template>

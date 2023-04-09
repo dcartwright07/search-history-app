@@ -9,6 +9,7 @@ export const useMovieStore = defineStore('movie', () => {
   const movies = ref([] as Movie[])
   const totalMovies = ref(0)
   const history = ref([] as SearchHistory[])
+  const page = ref(1)
 
   async function fetchMovies(searchTerm: string) {
     const results = (await axios.get(`${API_URL}&s=${searchTerm}`)).data
@@ -16,20 +17,37 @@ export const useMovieStore = defineStore('movie', () => {
     if (results.Response === 'True') {
       movies.value = results.Search
       totalMovies.value = parseInt(results.totalResults)
-      history.value.push({
-        searchTerm: searchTerm,
-        successful: true,
-        dateTime: new Date(),
-        totalResults: parseInt(results.totalResults)
-      })
+      updateHistory(searchTerm, parseInt(results.totalResults))
     } else {
-      history.value.push({
-        searchTerm: searchTerm,
-        successful: false,
-        dateTime: new Date()
-      })
+      updateHistory(searchTerm)
     }
   }
 
-  return { movies, totalMovies, history, fetchMovies }
+  async function fetchMoreMovies(searchTerm: string) {
+    page.value += 1
+    const results = (await axios.get(`${API_URL}&s=${searchTerm}&page=${page.value}`)).data
+
+    if (results.Response === 'True') {
+      movies.value.push(...results.Search)
+      updateHistory(searchTerm, parseInt(results.totalResults))
+    } else {
+      updateHistory(searchTerm)
+    }
+  }
+
+  function updateHistory(searchTerm: string, totalResults?: number) {
+    const historyObj = {
+      searchTerm: searchTerm,
+      successful: true,
+      dateTime: new Date()
+    } as SearchHistory
+
+    if (totalResults) {
+      historyObj.totalResults = totalResults
+    }
+
+    history.value.push(historyObj)
+  }
+
+  return { movies, totalMovies, history, fetchMovies, fetchMoreMovies }
 })
