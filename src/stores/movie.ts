@@ -10,6 +10,7 @@ export const useMovieStore = defineStore('movie', () => {
   const totalMovies = ref(0)
   const history = ref([] as SearchHistory[])
   const page = ref(1)
+  const currentErrorMessage = ref('')
 
   async function fetchMovies(searchTerm: string) {
     const results = (await axios.get(`${API_URL}&s=${searchTerm}`)).data
@@ -44,13 +45,17 @@ export const useMovieStore = defineStore('movie', () => {
     if (totalResults) {
       historyObj.totalResults = totalResults
       historyObj.successful = true
+      currentErrorMessage.value = ''
     } else {
       historyObj.successful = false
       historyObj.errorMessage = errorMessage
+      currentErrorMessage.value = errorMessage
+      movies.value = []
+      totalMovies.value = 0
     }
 
     history.value.push(historyObj)
   }
 
-  return { movies, totalMovies, history, fetchMovies, fetchMoreMovies }
+  return { movies, totalMovies, history, currentErrorMessage, fetchMovies, fetchMoreMovies }
 })

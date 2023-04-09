@@ -17,12 +17,23 @@ export default defineComponent({
     totalMovies(): number {
       return this.movieStore.totalMovies
     },
+    errorMessage(): string {
+      return this.movieStore.currentErrorMessage
+    },
     ...mapStores(useMovieStore)
   },
 
   methods: {
     hasPoster(poster: string) {
       return poster !== this.noValue
+    },
+    getSuggestion(message: string) {
+      switch (message) {
+        case 'Too many results.':
+          return 'Try making your search more specific.'
+        default:
+          return 'Try a different search term'
+      }
     },
     ...mapActions(useMovieStore, ['fetchMovies', 'fetchMoreMovies'])
   }
@@ -31,15 +42,15 @@ export default defineComponent({
 
 <template>
   <main>
-    <form
-      class="flex mx-auto mt-16 max-w-xl sm:mt-15 gap-x-2"
-      @submit.prevent="fetchMovies(search)"
-    >
+    <h1 class="mt-16 sm:mt-15 mb-3 max-w-xl mx-auto text-center">
+      Look up any movie, series, or game and see what you find.
+    </h1>
+    <form class="flex mx-auto max-w-xl gap-x-2" @submit.prevent="fetchMovies(search)">
       <input
         v-model="search"
         type="text"
         class="block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-        placeholder="Search"
+        placeholder="Search By Title"
       />
       <button
         type="submit"
@@ -53,6 +64,7 @@ export default defineComponent({
       <h2 class="text-2xl font-bold tracking-tight text-gray-900">
         Showing {{ movies.length }}/{{ totalMovies }} Results
       </h2>
+      <div class="border-b border-black/9 w-full"></div>
 
       <div class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
         <div v-for="movie in movies" :key="movie.imdbID" class="group relative">
@@ -92,5 +104,21 @@ export default defineComponent({
     >
       Load More
     </button>
+
+    <div
+      v-if="errorMessage"
+      class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 text-center"
+    >
+      <p>Unfortuntely, there isn't a content to display.</p>
+      <p>{{ errorMessage }}</p>
+      <p>{{ getSuggestion(errorMessage) }}</p>
+    </div>
+
+    <div
+      v-if="!movies.length && !errorMessage"
+      class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8"
+    >
+      <h2 class="text-2xl text-gray-900 text-center">Start by using the search box above.</h2>
+    </div>
   </main>
 </template>
