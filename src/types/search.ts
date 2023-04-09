@@ -9,4 +9,6 @@ export interface Movie {
 export interface SearchHistory {
   searchTerm: string
   successful: boolean
+  dateTime: Date
+  totalResults?: number
 }

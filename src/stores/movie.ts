@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { defineStore } from 'pinia'
 import type { Movie, SearchHistory } from '@/types/search'
 import axios from 'axios'
@@ -18,12 +18,15 @@ export const useMovieStore = defineStore('movie', () => {
       totalMovies.value = parseInt(results.totalResults)
       history.value.push({
         searchTerm: searchTerm,
-        successful: true
+        successful: true,
+        dateTime: new Date(),
+        totalResults: parseInt(results.totalResults)
       })
     } else {
       history.value.push({
         searchTerm: searchTerm,
-        successful: false
+        successful: false,
+        dateTime: new Date()
       })
     }
   }
