@@ -32,7 +32,7 @@ export default defineComponent({
         case 'Too many results.':
           return 'Try making your search more specific.'
         default:
-          return 'Try a different search term'
+          return 'Try a different search term.'
       }
     },
     ...mapActions(useMovieStore, ['fetchMovies', 'fetchMoreMovies'])
@@ -109,7 +109,7 @@ export default defineComponent({
       v-if="errorMessage"
       class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 text-center"
     >
-      <p>Unfortuntely, there isn't a content to display.</p>
+      <p>Unfortuntely, there isn't any content to display.</p>
       <p>{{ errorMessage }}</p>
       <p>{{ getSuggestion(errorMessage) }}</p>
     </div>
