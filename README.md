@@ -1,6 +1,6 @@
 # Search &amp; History application
 
-Search &amp; History application for Slingshot evaluation
+Search &amp; History application for a job evaluation
 
 ## Requirements
 
