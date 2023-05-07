@@ -1,15 +1,12 @@
-<script lang="ts">
+<script lang="ts" setup>
 import { RouterLink } from 'vue-router'
-import { defineComponent } from 'vue'
+import { useRoute } from 'vue-router'
 
-export default defineComponent({
-  components: { RouterLink },
-  methods: {
-    isActive(routeName: string) {
-      return this.$route.matched.some(({ name }) => name === routeName)
-    }
-  }
-})
+const route = useRoute()
+
+const isActive = (routeName: string) => {
+  return route.matched.some(({ name }) => name === routeName)
+}
 </script>
 
 <template>

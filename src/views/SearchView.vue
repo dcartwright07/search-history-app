@@ -1,43 +1,26 @@
-<script lang="ts">
-import { mapActions, mapStores } from 'pinia'
+<script lang="ts" setup>
 import { useMovieStore } from '@/stores/movie'
-import { defineComponent } from 'vue'
-import type { Movie } from '@/types/search'
+import { computed } from 'vue'
 
-export default defineComponent({
-  data: () => ({
-    search: '',
-    noValue: 'N/A'
-  }),
+const movieStore = useMovieStore()
 
-  computed: {
-    movies(): Movie[] {
-      return this.movieStore.movies
-    },
-    totalMovies(): number {
-      return this.movieStore.totalMovies
-    },
-    errorMessage(): string {
-      return this.movieStore.currentErrorMessage
-    },
-    ...mapStores(useMovieStore)
-  },
+const movies = computed(() => movieStore.movies)
+const totalMovies = computed(() => movieStore.totalMovies)
+const errorMessage = computed(() => movieStore.currentErrorMessage)
 
-  methods: {
-    hasPoster(poster: string) {
-      return poster !== this.noValue
-    },
-    getSuggestion(message: string) {
-      switch (message) {
-        case 'Too many results.':
-          return 'Try making your search more specific.'
-        default:
-          return 'Try a different search term.'
-      }
-    },
-    ...mapActions(useMovieStore, ['fetchMovies', 'fetchMoreMovies'])
+const hasPoster = (poster: string) => poster !== 'N/A'
+
+const getSuggestion = (message: string) => {
+  switch (message) {
+    case 'Too many results.':
+      return 'Try making your search more specific.'
+    default:
+      return 'Try a different search term.'
   }
-})
+}
+
+const fetchMovies = (search: string) => movieStore.fetchMovies(search)
+const fetchMoreMovies = (search: string) => movieStore.fetchMoreMovies(search)
 </script>
 
 <template>

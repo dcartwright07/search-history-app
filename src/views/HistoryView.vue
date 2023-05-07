@@ -1,34 +1,17 @@
-<script lang="ts">
-import { mapStores } from 'pinia'
+<script lang="ts" setup>
 import { useMovieStore } from '@/stores/movie'
-import { defineComponent } from 'vue'
+import { computed } from 'vue'
 import { format } from 'date-fns'
-import type { SearchHistory } from '@/types/search'
 
-export default defineComponent({
-  filters: {
-    formatDate(value: Date) {
-      return format(value, 'MMMM d, yyyy - h:mm a')
-    }
-  },
+const movieStore = useMovieStore()
 
-  computed: {
-    history(): SearchHistory[] {
-      return this.movieStore.history
-    },
-    ...mapStores(useMovieStore)
-  },
+const history = computed(() => movieStore.history)
 
-  methods: {
-    formatDate(date: Date) {
-      return format(date, 'MMMM d, yyyy - h:mm a')
-    },
+const getTotal = (totalResults: number | undefined) => (totalResults ? totalResults : 0)
 
-    getTotal(totalResults: number) {
-      return totalResults ? totalResults : 0
-    }
-  }
-})
+const formatDate = (date: Date) => {
+  return format(date, 'MMMM d, yyyy - h:mm a')
+}
 </script>
 
 <template>
